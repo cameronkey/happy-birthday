@@ -59,7 +59,7 @@ function HangingLamp({ lampOn, onPull, setHover, pulled }) {
     }
   });
   return (
-    <group position={[0, 0.7, 0]}>
+    <group position={[0, 0.9, 0]}>
       {/* Cord to ceiling */}
       <mesh position={[0, 0.35, 0]}>
         <cylinderGeometry args={[0.025, 0.025, 0.7, 16]} />
@@ -75,6 +75,19 @@ function HangingLamp({ lampOn, onPull, setHover, pulled }) {
         <coneGeometry args={[0.28, 0.35, 32]} />
         <meshStandardMaterial color={lampOn ? '#ffe9a7' : '#3a2c23'} emissive={lampOn ? '#ffe9a7' : '#000000'} emissiveIntensity={lampOn ? 0.7 : 0} />
       </mesh>
+      {/* Emissive bulb inside lamp shade */}
+      <mesh position={[0, -0.32, 0]}>
+        <sphereGeometry args={[0.06, 24, 24]} />
+        <meshStandardMaterial emissive={lampOn ? '#fff7d6' : '#000'} emissiveIntensity={lampOn ? 2.5 : 0} color={'#fffbe6'} />
+      </mesh>
+      {/* Point light for soft fill */}
+      <pointLight
+        position={[0, -0.32, 0]}
+        intensity={lampOn ? 0.7 : 0}
+        distance={2.2}
+        color={'#fff7d6'}
+        castShadow={false}
+      />
       {/* Pull string, now attached to bottom of lamp shade */}
       <group position={[0, -0.4, 0]}>
         <PullString onPull={onPull} isLampOn={lampOn} setHover={setHover} pulled={pulled} />
@@ -83,10 +96,10 @@ function HangingLamp({ lampOn, onPull, setHover, pulled }) {
       <spotLight
         ref={spotRef}
         position={[0, -0.32, 0]}
-        angle={0.55}
-        penumbra={0.7}
+        angle={0.65}
+        penumbra={0.8}
         distance={7}
-        intensity={lampOn ? 4.5 : 0.01}
+        intensity={lampOn ? 5.5 : 0.01}
         color={'#fff7d6'}
         castShadow
       />
@@ -136,7 +149,7 @@ function Scene1() {
     <Canvas
       shadows
       camera={{ position: [0, 1.2, 4.2], fov: 30 }}
-      style={{ height: '100vh', width: '100vw', background: '#18120e' }}
+      style={{ height: '100vh', width: '100vw', background: lampOn ? '#24180c' : '#18120e' }}
     >
       <FocusedRoom lampOn={lampOn} setLampHover={setLampHover} pulled={pulled} onPull={handlePull} />
     </Canvas>
