@@ -9,10 +9,15 @@ function PullString({ onPull, isLampOn, setHover, pulled }) {
   const ballRef = useRef();
   useFrame(() => {
     if (stringRef.current && ballRef.current) {
+      // Always use the shorter string (on) length
+      const baseLength = 0.7 * 0.7;
+      const basePosY = -0.35 * 0.7;
       const stretch = pulled ? 1.35 : 1;
       stringRef.current.scale.y = stretch;
+      stringRef.current.geometry.parameters.height = baseLength;
+      stringRef.current.position.y = basePosY;
       // Move the ball to the end of the stretched string
-      ballRef.current.position.y = -0.35 * stretch - 0.35;
+      ballRef.current.position.y = basePosY * stretch - 0.35 * 0.7;
     }
   });
   return (
@@ -20,19 +25,19 @@ function PullString({ onPull, isLampOn, setHover, pulled }) {
       {/* String: always attached to lamp shade */}
       <mesh
         ref={stringRef}
-        position={[0, -0.35, 0]}
+        position={[0, -0.245, 0]}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
         onClick={onPull}
         castShadow
       >
-        <cylinderGeometry args={[0.012, 0.012, 0.7, 16]} />
+        <cylinderGeometry args={[0.012, 0.012, 0.49, 16]} />
         <meshStandardMaterial color={isLampOn ? '#ffe9a7' : '#bfbfbf'} />
       </mesh>
       {/* Pull ball */}
       <mesh
         ref={ballRef}
-        position={[0, -0.7, 0]}
+        position={[0, -0.49, 0]}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
         onClick={onPull}
@@ -120,7 +125,15 @@ function FocusedRoom({ lampOn, setLampHover, pulled, onPull }) {
       {/* Hanging lamp with pull string */}
       <HangingLamp lampOn={lampOn} onPull={onPull} setHover={setLampHover} pulled={pulled} />
       {/* Dim ambient light */}
-      <ambientLight intensity={lampOn ? 0.18 : 0.04} color="#ffe9a7" />
+      <ambientLight intensity={lampOn ? 0.11 : 0.04} color="#ffe9a7" />
+      {/* Extra ambient hemisphere light when lamp is on */}
+      {lampOn && (
+        <hemisphereLight
+          skyColor={'#ffe9a7'}
+          groundColor={'#3a2712'}
+          intensity={0.1}
+        />
+      )}
     </>
   );
 }
@@ -149,7 +162,7 @@ function Scene1() {
     <Canvas
       shadows
       camera={{ position: [0, 1.2, 4.2], fov: 30 }}
-      style={{ height: '100vh', width: '100vw', background: lampOn ? '#24180c' : '#18120e' }}
+      style={{ height: '100vh', width: '100vw', background: lampOn ? '#3a2712' : '#18120e' }}
     >
       <FocusedRoom lampOn={lampOn} setLampHover={setLampHover} pulled={pulled} onPull={handlePull} />
     </Canvas>
@@ -164,10 +177,6 @@ function App() {
           <Scene1 />
         </div>
       </Suspense>
-      {/* Narration/Text */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/60 text-white text-lg px-6 py-3 rounded-lg shadow-lg animate-fade-in">
-        It's a quiet evening… but something magical is about to happen…
-      </div>
       {/* Ambient sound placeholder */}
       {/* <audio src="/ambient.mp3" autoPlay loop /> */}
     </div>
