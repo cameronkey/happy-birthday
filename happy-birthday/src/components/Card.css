@@ -16,14 +16,6 @@
   visibility: hidden;
 }
 
-.birthdayCard:hover .cardFront {
-  transform: rotateY(-160deg);
-}
-
-.birthdayCard:hover .happy {
-  visibility: hidden;
-}
-
 .cardFront {
   position: relative;
   background-color: #fff;
@@ -155,4 +147,10 @@ p {
   margin: 30px;
   outline-color: #333;
   outline-style: dotted;
+}
+
+@media (min-width: 768px) {
+  .birthdayCard {
+    transform: perspective(2500px) scale(2);
+  }
 }

@@ -3,16 +3,15 @@ import Loading from './components/Loading';
 import Envelope from './components/Envelope';
 import Card from './components/Card';
 import Ticket from './components/Ticket';
-import { Sparkles } from 'lucide-react';
 
-type Stage = 'loading' | 'envelope-drop' | 'envelope-hover' | 'card-reveal' | 'card-3d' | 'ticket-view' | 'final';
+type Stage = 'loading' | 'envelope-drop' | 'envelope-hover' | 'card-3d' | 'ticket-view' | 'final';
 
 function App() {
   const [stage, setStage] = useState<Stage>('loading');
   const [isDragging, setIsDragging] = useState(false);
   const [dragProgress, setDragProgress] = useState(0);
-  const [cardFlipped, setCardFlipped] = useState(false);
   const [envelopeOpened, setEnvelopeOpened] = useState(false);
+  const [cardIsOpen, setCardIsOpen] = useState(false);
 
   // Initialize audio on first user interaction
   const playSound = (frequency: number, duration: number) => {
@@ -67,7 +66,7 @@ function App() {
     setDragProgress(progress);
     
     if (progress > 0.8) {
-      setStage('card-reveal');
+      setStage('card-3d');
       setIsDragging(false);
       playSound(783, 0.3); // G note
     }
@@ -81,15 +80,9 @@ function App() {
   };
 
   const handleCardClick = () => {
-    if (stage === 'card-reveal') {
-      setStage('card-3d');
-      setCardFlipped(true);
-      playSound(1047, 0.4); // High C
-    } else if (stage === 'card-3d') {
-      setCardFlipped(!cardFlipped);
-      playSound(1047, 0.4); // High C
-    }
-  };
+    setCardIsOpen(!cardIsOpen);
+    playSound(1047, 0.4); // High C
+  }
 
   const handleTicketClick = () => {
     if (stage === 'card-3d') {
@@ -97,6 +90,11 @@ function App() {
       playSound(1319, 0.5); // E high
     }
   };
+
+  const handleReturnToCard = () => {
+    setStage('card-3d');
+    playSound(783, 0.3); // G note
+  }
 
   const downloadGift = () => {
     // Create a simple gift certificate
@@ -155,34 +153,18 @@ function App() {
             handleDragEnd={handleDragEnd}
           />
         );
-      case 'card-reveal':
-        return (
-            <div className="flex items-center justify-center min-h-screen relative">
-                <div className="text-center mb-8 absolute top-20 animate-fade-in">
-                    <p className="text-white text-xl mb-2">🎉 You pulled out the card!</p>
-                    <p className="text-white/80 text-sm">Click on it to open and explore</p>
-                </div>
-    
-                <div 
-                    className="w-96 h-64 bg-white rounded-xl shadow-2xl cursor-pointer transform hover:scale-105 transition-all duration-300 animate-[card-appear_1s_ease-out]"
-                    onClick={handleCardClick}
-                >
-                    <div className="w-full h-full bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-600 rounded-xl p-8 flex flex-col justify-center items-center text-white">
-                        <Sparkles className="w-16 h-16 mb-4 animate-pulse" />
-                        <h2 className="text-3xl font-bold mb-2">Happy Birthday!</h2>
-                        <p className="text-center text-lg opacity-90">Click to open your card!</p>
-                    </div>
-                </div>
-            </div>
-        )
       case 'card-3d':
         return (
           <div className="flex items-center justify-center min-h-screen">
-            <Card handleTicketClick={handleTicketClick} />
+            <Card 
+              isOpened={cardIsOpen}
+              onCardClick={handleCardClick}
+              onTicketClick={handleTicketClick} 
+            />
           </div>
         );
       case 'ticket-view':
-        return <Ticket downloadGift={downloadGift} stage={stage} />;
+        return <Ticket downloadGift={downloadGift} stage={stage} onReturn={handleReturnToCard} />;
       case 'final':
         return (
           <div className="flex flex-col items-center justify-center min-h-screen text-center text-white">

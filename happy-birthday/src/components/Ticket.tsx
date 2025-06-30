@@ -1,14 +1,23 @@
 import React from 'react';
-import { Gift, Download } from 'lucide-react';
+import { Gift, Download, ArrowLeft } from 'lucide-react';
 
 type TicketProps = {
   downloadGift: () => void;
   stage: string;
+  onReturn: () => void;
 };
 
-const Ticket: React.FC<TicketProps> = ({ downloadGift, stage }) => {
+const Ticket: React.FC<TicketProps> = ({ downloadGift, stage, onReturn }) => {
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen relative">
+      <button 
+        onClick={onReturn}
+        className="absolute top-8 left-8 bg-white/20 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-white/30 transform transition-all duration-300 flex items-center gap-2"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Back to Card
+      </button>
+
       <div className="text-center mb-8 absolute top-20 animate-fade-in">
         <h2 className="text-white text-3xl font-bold">Your Golden Ticket!</h2>
         <p className="text-white/80 mt-2">
