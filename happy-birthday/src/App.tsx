@@ -173,33 +173,33 @@ function App() {
             onMouseEnter={handleEnvelopeHover}
             onTouchStart={handleEnvelopeHover}
           >
-            {/* Main Envelope Body */}
-            <div className="relative w-80 h-56 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg shadow-2xl overflow-hidden">
+            {/* Main Envelope Body - md classes double the size on desktop */}
+            <div className="relative w-80 md:w-[40rem] h-56 md:h-[28rem] bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg shadow-2xl overflow-hidden">
               
               {/* Envelope Seal/Wax */}
-              <div className={`absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full shadow-lg z-20 transition-all duration-700 ${
+              <div className={`absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 md:w-32 h-16 md:h-32 bg-gradient-to-br from-red-500 to-red-600 rounded-full shadow-lg z-20 transition-all duration-700 ${
                 envelopeOpened ? 'scale-0 opacity-0' : 'scale-100 opacity-100'
               }`}>
-                <div className="absolute inset-2 bg-red-400 rounded-full flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-white" />
+                <div className="absolute inset-2 md:inset-4 bg-red-400 rounded-full flex items-center justify-center">
+                  <Heart className="w-6 h-6 md:w-12 md:h-12 text-white" />
                 </div>
               </div>
 
               {/* Side Flap */}
-              <div className={`absolute top-0 right-0 w-40 h-56 bg-gradient-to-bl from-amber-300 to-orange-400 transform-gpu transition-all duration-1000 origin-right z-10 ${
-                envelopeOpened ? 'rotate-y-120 translate-x-8' : 'rotate-y-0'
+              <div className={`absolute top-0 right-0 w-40 md:w-80 h-56 md:h-[28rem] bg-gradient-to-bl from-amber-300 to-orange-400 transform-gpu transition-all duration-1000 origin-right z-10 ${
+                envelopeOpened ? 'rotate-y-120 translate-x-8 md:translate-x-16' : 'rotate-y-0'
               }`}
               style={{
                 clipPath: 'polygon(0 0, 100% 0, 100% 100%, 20% 100%)',
                 transformStyle: 'preserve-3d'
               }}>
-                <Mail className="absolute top-4 right-4 text-orange-600 w-6 h-6" />
+                <Mail className="absolute top-4 right-4 md:top-8 md:right-8 text-orange-600 w-6 h-6 md:w-12 md:h-12" />
               </div>
 
               {/* Card inside envelope - only visible when envelope opens */}
               {envelopeOpened && (
                 <div 
-                  className={`absolute top-8 left-8 w-64 h-40 bg-white rounded-lg shadow-lg transform transition-all duration-500 cursor-grab z-30 ${
+                  className={`absolute top-8 md:top-16 left-8 md:left-16 w-64 md:w-[32rem] h-40 md:h-80 bg-white rounded-lg shadow-lg transform transition-all duration-500 cursor-grab z-30 ${
                     isDragging ? 'cursor-grabbing' : ''
                   } ${stage === 'envelope-hover' ? 'animate-[card-peek_0.8s_ease-out]' : ''}`}
                   style={{
@@ -214,10 +214,10 @@ function App() {
                   onTouchMove={handleDragMove}
                   onTouchEnd={handleDragEnd}
                 >
-                  <div className="p-6 h-full flex flex-col justify-center items-center bg-gradient-to-br from-pink-100 to-purple-100 rounded-lg border-2 border-pink-200">
-                    <Heart className="text-pink-500 w-12 h-12 mb-2 animate-pulse" />
-                    <p className="text-purple-800 font-bold text-center text-lg">Happy Birthday!</p>
-                    <p className="text-purple-600 text-sm text-center mt-1">Drag me out!</p>
+                  <div className="p-6 md:p-12 h-full flex flex-col justify-center items-center bg-gradient-to-br from-pink-100 to-purple-100 rounded-lg border-2 border-pink-200">
+                    <Heart className="text-pink-500 w-12 h-12 md:w-24 md:h-24 mb-2 md:mb-4 animate-pulse" />
+                    <p className="text-purple-800 font-bold text-center text-lg md:text-3xl">Happy Birthday!</p>
+                    <p className="text-purple-600 text-sm md:text-lg text-center mt-1 md:mt-2">Drag me out!</p>
                   </div>
                 </div>
               )}
