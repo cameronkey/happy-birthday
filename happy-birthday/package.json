@@ -10,16 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-three/drei": "^10.3.0",
-    "@react-three/fiber": "^9.1.2",
-    "@tailwindcss/postcss": "^4.1.11",
-    "autoprefixer": "^10.4.21",
-    "gsap": "^3.13.0",
-    "postcss": "^8.5.6",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "tailwindcss": "^4.1.11",
-    "use-sound": "^5.0.0"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
