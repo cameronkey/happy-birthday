@@ -71,10 +71,19 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
     >
       <div className="cardFront relative overflow-hidden">
         <div className="relative z-10 p-4">
-          <svg 
-            viewBox="0 0 100 100" 
-            className="w-full h-full"
-          >
+          <svg viewBox="0 0 300 150" className="w-full">
+            <path id="happy-curve" d="M 50,90 A 100,50 0 0,1 250,90" fill="transparent" />
+            <text className="happy" style={{ fontSize: '3.5rem' }}>
+              <textPath href="#happy-curve" startOffset="50%" textAnchor="middle">
+                HAPPY
+              </textPath>
+            </text>
+            <path id="birthday-curve" d="M 20,145 A 100,50 0 0,1 280,145" fill="transparent" />
+            <text className="happy" style={{ fontSize: '3.5rem' }}>
+              <textPath href="#birthday-curve" startOffset="50%" textAnchor="middle">
+                BIRTHDAY
+              </textPath>
+            </text>
           </svg>
         </div>
         
@@ -114,6 +123,12 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
         </div>
       </div>
       <div className="cardInside">
+        <h3 className="back">A Special Note!</h3>
+        <p>Dear Friend,</p>
+        <p>
+          Hope your day is filled with love and
+          laughter! May all of your birthday wishes come true.
+        </p>
         <div 
           className="golden-ticket overflow-hidden absolute bottom-4 right-4 w-1/2 p-2 text-black text-center rounded-lg cursor-pointer transition-all"
           style={{
