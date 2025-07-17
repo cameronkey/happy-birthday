@@ -102,19 +102,70 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
         <div className={`relative z-10 p-4 transition-opacity duration-300 ${
           isOpened || isAnimating ? 'opacity-0' : 'opacity-100'
         }`}>
-          <svg viewBox="0 0 300 150" className="w-full">
-            <path id="happy-curve" d="M 50,90 A 100,50 0 0,1 250,90" fill="transparent" />
-            <text className="happy" style={{ fontSize: '3.5rem' }}>
-              <textPath href="#happy-curve" startOffset="50%" textAnchor="middle">
+          <svg viewBox="0 0 300 180" className="w-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#87CEEB" />
+                <stop offset="50%" stopColor="#4169E1" />
+                <stop offset="100%" stopColor="#87CEEB" />
+              </linearGradient>
+              <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="3" dy="3" stdDeviation="2" floodColor="#00008B" floodOpacity="0.8"/>
+              </filter>
+            </defs>
+            
+            {/* HAPPY text on curved path */}
+            <path id="happy-curve" d="M 30,70 Q 150,40 270,70" fill="none" />
+            <text 
+              fontSize="28" 
+              fontFamily="Baloo 2, cursive" 
+              fontWeight="800" 
+              fill="url(#textGradient)"
+              filter="url(#textShadow)"
+              textAnchor="middle"
+            >
+              <textPath href="#happy-curve" startOffset="50%">
                 HAPPY
               </textPath>
             </text>
-            <path id="birthday-curve" d="M 20,145 A 100,50 0 0,1 280,145" fill="transparent" />
-            <text className="happy" style={{ fontSize: '3.5rem' }}>
-              <textPath href="#birthday-curve" startOffset="50%" textAnchor="middle">
+            
+            {/* BIRTHDAY text on curved path */}
+            <path id="birthday-curve" d="M 20,130 Q 150,100 280,130" fill="none" />
+            <text 
+              fontSize="24" 
+              fontFamily="Baloo 2, cursive" 
+              fontWeight="800" 
+              fill="url(#textGradient)"
+              filter="url(#textShadow)"
+              textAnchor="middle"
+            >
+              <textPath href="#birthday-curve" startOffset="50%">
                 BIRTHDAY
               </textPath>
             </text>
+            
+            {/* Decorative elements */}
+            <g opacity="0.7">
+              {/* Stars */}
+              <path d="M 50,30 L 52,36 L 58,36 L 53,40 L 55,46 L 50,42 L 45,46 L 47,40 L 42,36 L 48,36 Z" fill="#FFD700" />
+              <path d="M 250,25 L 252,31 L 258,31 L 253,35 L 255,41 L 250,37 L 245,41 L 247,35 L 242,31 L 248,31 Z" fill="#FFD700" />
+              <path d="M 80,160 L 82,166 L 88,166 L 83,170 L 85,176 L 80,172 L 75,176 L 77,170 L 72,166 L 78,166 Z" fill="#FFD700" />
+              <path d="M 220,155 L 222,161 L 228,161 L 223,165 L 225,171 L 220,167 L 215,171 L 217,165 L 212,161 L 218,161 Z" fill="#FFD700" />
+              
+              {/* Sparkles */}
+              <circle cx="70" cy="50" r="2" fill="#FF69B4" opacity="0.8">
+                <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="230" cy="45" r="1.5" fill="#FF69B4" opacity="0.6">
+                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.5s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="90" cy="140" r="1.5" fill="#FF69B4" opacity="0.7">
+                <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.8s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="210" cy="145" r="2" fill="#FF69B4" opacity="0.5">
+                <animate attributeName="opacity" values="0.5;0.1;0.5" dur="2.2s" repeatCount="indefinite" />
+              </circle>
+            </g>
           </svg>
         </div>
         
