@@ -90,7 +90,7 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
         {/* Video with lazy loading and fallback */}
         <div 
           ref={videoRef}
-          className="absolute bottom-0 left-0 w-full h-32 sm:h-40 md:h-48 lg:h-56"
+          className="video-container absolute bottom-0 left-0 w-full h-32 sm:h-40 md:h-48 lg:h-56"
           style={{ maskImage: 'linear-gradient(to top, black 10%, transparent 100%)' }}
         >
           {!videoLoaded && !videoError && (

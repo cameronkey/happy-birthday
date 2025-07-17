@@ -1,50 +1,49 @@
-@@ .. @@
- .birthdayCard.is-opened .happy {
--  visibility: hidden;
-+  opacity: 0;
-+  transition: opacity 0.3s ease-out;
- }
- 
- .cardFront {
-   position: relative;
-   background-color: #fff;
-   width: 250px;
-   height: 350px;
-   overflow: hidden;
-   transform-origin: left;
-   box-shadow: inset 100px 20px 100px rgba(0, 0, 0, 0.2),
-     30px 0 50px rgba(0, 0, 0, 0.4);
-   transition: 0.6s;
-+  /* Ensure content stays within bounds during rotation */
-+  backface-visibility: hidden;
- }
- 
-+/* Ensure video only appears on front face */
-+.birthdayCard.is-opened .cardFront > div:last-child {
-+  opacity: 0;
-+  transition: opacity 0.3s ease-out;
-+}
-+
- .happy {
-   font-family: 'Baloo 2', cursive;
-   font-weight: 800;
-   fill: #87CEEB; /* Light Sky Blue */
-+  transition: opacity 0.3s ease-out;
-   text-shadow:
-     /* --- Dark Blue Outline --- */
-     -3px -3px 0 #00008B, /* DarkBlue */
-@@ .. @@
- .cardInside {
-   position: absolute;
-   background-color: #fff;
-   width: 250px;
-   height: 350px;
-   z-index: -1;
-   left: 0;
-   top: 0;
-   box-shadow: inset 100px 20px 100px rgba(0, 0, 0, 0.2);
-+  /* Prevent any bleed-through from front face */
-+  overflow: hidden;
- }
- 
- p {
+.birthdayCard.is-opened .happy {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.cardFront {
+  position: relative;
+  background-color: #fff;
+  width: 250px;
+  height: 350px;
+  overflow: hidden;
+  transform-origin: left;
+  box-shadow: inset 100px 20px 100px rgba(0, 0, 0, 0.2),
+    30px 0 50px rgba(0, 0, 0, 0.4);
+  transition: 0.6s;
+  /* Ensure content stays within bounds during rotation */
+  backface-visibility: hidden;
+}
+
+/* Ensure video only appears on front face */
+.birthdayCard.is-opened .cardFront .video-container {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  pointer-events: none;
+}
+
+.happy {
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  fill: #87CEEB; /* Light Sky Blue */
+  transition: opacity 0.3s ease-out;
+  text-shadow:
+    /* --- Dark Blue Outline --- */
+    -3px -3px 0 #00008B, /* DarkBlue */
+
+.cardInside {
+  position: absolute;
+  background-color: #fff;
+  width: 250px;
+  height: 350px;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  box-shadow: inset 100px 20px 100px rgba(0, 0, 0, 0.2);
+  /* Prevent any bleed-through from front face */
+  overflow: hidden;
+}
+
+p {
