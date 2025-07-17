@@ -12,6 +12,7 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
   const [videoError, setVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isInView, setIsInView] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -36,6 +37,34 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
     };
   }, []);
 
+  // Handle animation state to prevent clipping
+  useEffect(() => {
+    if (isOpened) {
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 600); // Match CSS transition duration
+      return () => clearTimeout(timer);
+    } else {
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 600);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpened]);
+
+  // Pause/play video based on card state
+  useEffect(() => {
+    if (videoRef.current) {
+      const video = videoRef.current.querySelector('video') as HTMLVideoElement;
+      if (video) {
+        if (isOpened) {
+          video.pause();
+        } else {
+          video.play().catch(() => {
+            // Video play failed, ignore silently
+          });
+        }
+      }
+    }
+  }, [isOpened]);
   const handleTicketClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card from closing when ticket is clicked
     
@@ -70,7 +99,9 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
       }}
     >
       <div className="cardFront relative overflow-hidden">
-        <div className="relative z-10 p-4">
+        <div className={`relative z-10 p-4 transition-opacity duration-300 ${
+          isOpened || isAnimating ? 'opacity-0' : 'opacity-100'
+        }`}>
           <svg viewBox="0 0 300 150" className="w-full">
             <path id="happy-curve" d="M 50,90 A 100,50 0 0,1 250,90" fill="transparent" />
             <text className="happy" style={{ fontSize: '3.5rem' }}>
@@ -88,39 +119,41 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
         </div>
         
         {/* Video with lazy loading and fallback */}
-        <div 
-          ref={videoRef}
-          className="video-container absolute bottom-0 left-0 w-full h-32 sm:h-40 md:h-48 lg:h-56"
-          style={{ maskImage: 'linear-gradient(to top, black 10%, transparent 100%)' }}
-        >
-          {!videoLoaded && !videoError && (
-            <div className="w-full h-full bg-gradient-to-t from-pink-200 to-transparent animate-pulse flex items-center justify-center">
-              <div className="text-pink-400 text-2xl">🦝</div>
-            </div>
-          )}
-          
-          {videoError && (
-            <div className="w-full h-full bg-gradient-to-t from-pink-200 to-transparent flex items-center justify-center">
-              <div className="text-pink-600 text-4xl animate-bounce">🦝✨</div>
-            </div>
-          )}
-          
-          {isInView && (
-            <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline
-              className={`w-full h-full object-cover transition-opacity duration-500 ${
-                videoLoaded ? 'opacity-100' : 'opacity-0'
-              }`}
-              onLoadedData={() => setVideoLoaded(true)}
-              onError={() => setVideoError(true)}
-            >
-              <source src="/videos/racoon-video.mp4" type="video/mp4" />
-            </video>
-          )}
-        </div>
+        {!isOpened && (
+          <div 
+            ref={videoRef}
+            className="video-container absolute bottom-0 left-0 w-full h-32 sm:h-40 md:h-48 lg:h-56"
+            style={{ maskImage: 'linear-gradient(to top, black 10%, transparent 100%)' }}
+          >
+            {!videoLoaded && !videoError && (
+              <div className="w-full h-full bg-gradient-to-t from-pink-200 to-transparent animate-pulse flex items-center justify-center">
+                <div className="text-pink-400 text-2xl">🦝</div>
+              </div>
+            )}
+            
+            {videoError && (
+              <div className="w-full h-full bg-gradient-to-t from-pink-200 to-transparent flex items-center justify-center">
+                <div className="text-pink-600 text-4xl animate-bounce">🦝✨</div>
+              </div>
+            )}
+            
+            {isInView && (
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className={`w-full h-full object-cover transition-opacity duration-500 ${
+                  videoLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                onLoadedData={() => setVideoLoaded(true)}
+                onError={() => setVideoError(true)}
+              >
+                <source src="/videos/racoon-video.mp4" type="video/mp4" />
+              </video>
+            )}
+          </div>
+        )}
       </div>
       <div className="cardInside">
         <h3 className="back">A Special Note!</h3>
