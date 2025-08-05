@@ -86,11 +86,11 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
   
   return (
     <div 
-      className={`birthdayCard ${isOpened ? 'is-opened' : ''}`}
+      className={`birthdayCard ${isOpened ? 'is-opened' : ''} hover:scale-105 transition-transform duration-300`}
       onClick={handleCardClick}
       tabIndex={0}
       role="button"
-      aria-label="Birthday card - click to open"
+      aria-label={isOpened ? "Birthday card - click to close" : "Birthday card - click to open"}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -213,15 +213,19 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
           Hope your day is filled with love and
           laughter! May all of your birthday wishes come true.
         </p>
+        
+        {/* Enhanced golden ticket with better visibility */}
         <div 
-          className="golden-ticket overflow-hidden absolute bottom-4 right-4 w-1/2 p-2 text-black text-center rounded-lg cursor-pointer transition-all"
+          className="golden-ticket overflow-hidden absolute bottom-4 right-4 w-1/2 p-3 text-black text-center rounded-lg cursor-pointer transition-all hover:scale-110 hover:shadow-lg animate-pulse border-2 border-yellow-400"
           style={{
-            background: 'linear-gradient(to right, #d19e1d, #ffd86e, #e3a812)'
+            background: 'linear-gradient(45deg, #d19e1d, #ffd86e, #e3a812, #ffd86e)',
+            backgroundSize: '200% 200%',
+            animation: 'gradient-shift 3s ease infinite'
           }}
           onClick={handleTicketClick}
           tabIndex={0}
           role="button"
-          aria-label="Golden surprise ticket - click to reveal surprise"
+          aria-label="Golden surprise ticket - click to reveal your special surprise"
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
@@ -229,7 +233,10 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
             }
           }}
         >
-          <p className="font-bold text-sm">Surprise Ticket</p>
+          <p className="font-bold text-sm flex items-center justify-center gap-1">
+            🎫 Surprise Ticket
+          </p>
+          <p className="text-xs opacity-80">Click me!</p>
         </div>
       </div>
     </div>
