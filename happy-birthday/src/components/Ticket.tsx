@@ -25,7 +25,7 @@ const Ticket: React.FC<TicketProps> = ({ downloadGift, stage, onReturn }) => {
         </p>
       </div>
 
-      <div className="relative w-[22rem] h-[44rem] bg-gradient-to-br from-yellow-300 to-amber-500 rounded-2xl shadow-2xl overflow-hidden p-8 flex flex-col items-center justify-between animate-[ticket-appear_1.5s_ease-out]">
+      <div className="relative mt-24 w-[22rem] h-[44rem] bg-gradient-to-br from-yellow-300 to-amber-500 rounded-2xl shadow-2xl overflow-hidden p-8 flex flex-col items-center justify-between animate-[ticket-appear_1.5s_ease-out]">
         {/* Top part with cutout */}
         <div className="absolute top-1/2 -left-8 w-16 h-16 bg-pink-400 rounded-full transform -translate-y-1/2"></div>
         <div className="absolute top-1/2 -right-8 w-16 h-16 bg-pink-400 rounded-full transform -translate-y-1/2"></div>

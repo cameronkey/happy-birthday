@@ -47,12 +47,20 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
         </video>
       </div>
       <div className="cardInside">
-        <h3 className="back">A Special Note!</h3>
-        <p>Dear Friend,</p>
-        <p>
-          Hope your day is filled with love and
-          laughter! May all of your birthday wishes come true.
-        </p>
+        {/* <h3 className="back">A Special Note!</h3> */}
+        <div className="cardInsideWrapper">
+          <p className="mb-4">Dear Mags,</p>
+          <p className="mb-4">
+            Hope your day is filled with love and
+            laughter! May all of your birthday wishes come true.
+          </p>
+          <p>
+            Love you always,
+          </p>
+          <p>
+            Cam
+          </p>
+        </div>
         <div 
           className="golden-ticket overflow-hidden absolute bottom-4 right-4 w-1/2 p-2 text-black text-center rounded-lg cursor-pointer transition-all"
           style={{
