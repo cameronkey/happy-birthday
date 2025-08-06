@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { Gift, Download, ArrowLeft } from 'lucide-react';
 
 interface TicketProps {
-  downloadGift: () => void;
-  stage: number;
-  onReturn: () => void;
 }
 
-const Ticket: React.FC<TicketProps> = ({ downloadGift, stage, onReturn }) => {
+const Ticket: React.FC<TicketProps> = ({ onReturn, onDownload }) => {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = async () => {
@@ -19,7 +16,7 @@ const Ticket: React.FC<TicketProps> = ({ downloadGift, stage, onReturn }) => {
     }
     
     try {
-      await downloadGift();
+      await onDownload();
     } finally {
       setIsDownloading(false);
     }
@@ -38,7 +35,7 @@ const Ticket: React.FC<TicketProps> = ({ downloadGift, stage, onReturn }) => {
       {/* Enhanced back button */}
       <button 
         onClick={handleReturn}
-        className="absolute top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 bg-white/20 backdrop-blur-sm text-white font-bold py-2 px-3 sm:px-4 rounded-full shadow-lg hover:bg-white/30 hover:scale-105 transform transition-all duration-300 flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-white/30 text-sm sm:text-base border border-white/30"
+        className="fixed top-4 left-4 z-50 bg-white/20 backdrop-blur-sm text-white font-bold py-3 px-4 rounded-full shadow-lg hover:bg-white/30 hover:scale-105 transform transition-all duration-300 flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-white/30 text-sm border border-white/30 min-h-[44px]"
         tabIndex={0}
         aria-label="Return to birthday card"
       >
@@ -47,7 +44,7 @@ const Ticket: React.FC<TicketProps> = ({ downloadGift, stage, onReturn }) => {
       </button>
 
       {/* Enhanced header with animation */}
-      <div className="text-center mb-8 absolute top-16 sm:top-20 animate-fade-in px-4">
+      <div className="text-center mb-8 absolute top-20 animate-fade-in px-4">
         <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
           <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold animate-pulse">
             ✨ Your Golden Ticket! ✨
@@ -59,7 +56,7 @@ const Ticket: React.FC<TicketProps> = ({ downloadGift, stage, onReturn }) => {
       </div>
 
       {/* Enhanced ticket with better visual effects */}
-      <div className="relative w-80 sm:w-[22rem] md:w-[24rem] h-[36rem] sm:h-[40rem] md:h-[44rem] bg-gradient-to-br from-yellow-300 to-amber-500 rounded-2xl shadow-2xl overflow-hidden p-6 sm:p-8 flex flex-col items-center justify-between animate-[ticket-appear_1.5s_ease-out] mx-4">
+      <div className="relative w-80 sm:w-[22rem] md:w-[24rem] h-[36rem] sm:h-[40rem] md:h-[44rem] bg-gradient-to-br from-yellow-300 to-amber-500 rounded-2xl shadow-2xl overflow-hidden p-6 sm:p-8 flex flex-col items-center justify-between animate-[ticket-appear_1.5s_ease-out] mx-4 mt-16">
         {/* Shimmer effect */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 animate-shimmer"></div>
         
