@@ -40,7 +40,7 @@ const Loading = () => {
     <div className="flex items-center justify-center min-h-screen">
       <div className="text-center animate-pulse px-4">
         <div className="inline-block animate-spin text-4xl sm:text-5xl md:text-6xl mb-6">🎁</div>
-        <p className="text-white text-lg sm:text-xl md:text-2xl font-bold min-h-[2rem]">
+        <p className="text-white text-xl sm:text-2xl md:text-3xl font-bold min-h-[2rem]" style={{ fontFamily: 'Dancing Script, cursive' }}>
           {loadingText}{dots}
         </p>
         

@@ -19,3 +19,21 @@
 }
 
 p {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  margin: 40px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.back {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.5rem; /* 24px */
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin: 30px;
+  outline-color: #333;
+  outline-style: dotted;
+}

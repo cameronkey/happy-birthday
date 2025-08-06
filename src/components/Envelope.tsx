@@ -65,10 +65,10 @@ const Envelope: React.FC<EnvelopeProps> = ({
       {stage === 'envelope-drop' && (
         <div className="text-center mb-8 absolute top-12 sm:top-16 md:top-20 animate-fade-in px-4 z-30">
           <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-            <p className="text-white text-lg sm:text-xl md:text-2xl mb-2 font-semibold">
+            <p className="text-white text-xl sm:text-2xl md:text-3xl mb-2 font-semibold" style={{ fontFamily: 'Dancing Script, cursive' }}>
               👇 Hover over the red seal to open!
             </p>
-            <p className="text-white/80 text-xs sm:text-sm md:text-base">
+            <p className="text-white/80 text-sm sm:text-base md:text-lg">
               (On mobile: tap the seal)
             </p>
             <div className="mt-2 animate-pulse">
@@ -81,10 +81,10 @@ const Envelope: React.FC<EnvelopeProps> = ({
       {stage === 'envelope-hover' && (
         <div className="text-center mb-8 absolute top-12 sm:top-16 md:top-20 animate-bounce px-4 z-30">
           <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-            <p className="text-white text-lg sm:text-xl md:text-2xl mb-2 font-semibold">
+            <p className="text-white text-xl sm:text-2xl md:text-3xl mb-2 font-semibold" style={{ fontFamily: 'Dancing Script, cursive' }}>
               ⬇️ Pull the card out!
             </p>
-            <p className="text-white/80 text-xs sm:text-sm md:text-base">
+            <p className="text-white/80 text-sm sm:text-base md:text-lg">
               Drag it down to reveal your surprise
             </p>
             <div className="mt-2">
@@ -171,8 +171,8 @@ const Envelope: React.FC<EnvelopeProps> = ({
             >
               <div className="p-3 xs:p-4 sm:p-6 md:p-8 lg:p-12 h-full flex flex-col justify-center items-center bg-gradient-to-br from-pink-100 to-purple-100 rounded-lg border-2 border-pink-200">
                 <Heart className="text-pink-500 w-8 h-8 xs:w-10 xs:h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-24 lg:h-24 mb-1 xs:mb-2 sm:mb-3 md:mb-4 animate-pulse" />
-                <p className="text-purple-800 font-bold text-center text-sm xs:text-base sm:text-lg md:text-2xl lg:text-3xl">Happy Birthday!</p>
-                <p className="text-purple-600 text-xs xs:text-sm sm:text-base md:text-lg text-center mt-1 md:mt-2">
+                <p className="text-purple-800 font-bold text-center text-base xs:text-lg sm:text-xl md:text-3xl lg:text-4xl" style={{ fontFamily: 'Dancing Script, cursive' }}>Happy Birthday!</p>
+                <p className="text-purple-600 text-sm xs:text-base sm:text-lg md:text-xl text-center mt-1 md:mt-2" style={{ fontFamily: 'Dancing Script, cursive' }}>
                   {isDragging ? `${Math.round(dragProgress * 100)}% pulled out!` : 'Drag me out!'}
                 </p>
               </div>
