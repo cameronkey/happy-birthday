@@ -138,7 +138,7 @@ function App() {
 
   const downloadGift = () => {
     // Replace 'your-image-name.jpg' with the actual filename from public/images
-    const imageUrl = '/videos/images/birthday-surprise.png';
+    const imageUrl = '/images/birthday-surprise.png';
     
     const link = document.createElement('a');
     link.download = 'birthday-surprise.png'; // You can change the download name
