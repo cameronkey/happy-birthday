@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import './Card.css';
 
 type CardProps = {
@@ -8,24 +8,6 @@ type CardProps = {
 };
 
 const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  
-  useEffect(() => {
-    if (videoRef.current && !isOpened) {
-      // Try to play the video when the card is visible (closed state)
-      const playVideo = async () => {
-        try {
-          await videoRef.current?.play();
-        } catch (error) {
-          console.log('Autoplay blocked by browser, video will play on user interaction');
-        }
-      };
-      
-      // Small delay to ensure the element is rendered
-      setTimeout(playVideo, 100);
-    }
-  }, [isOpened]);
-  
   const handleTicketClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card from closing when ticket is clicked
     onTicketClick();
@@ -54,14 +36,12 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
           </svg>
         </div>
         <video 
-          ref={videoRef}
           autoPlay 
           loop 
           muted 
           playsInline
           className="absolute bottom-0 left-0 w-full h-auto object-cover"
           style={{ maskImage: 'linear-gradient(to top, black 10%, transparent 100%)' }}
-          onClick={(e) => e.stopPropagation()}
         >
           <source src="/videos/racoon-video.mp4" type="video/mp4" />
         </video>
@@ -96,3 +76,4 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
 };
 
 export default Card;
+  
