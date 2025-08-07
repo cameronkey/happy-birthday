@@ -18,7 +18,7 @@ const Ticket: React.FC<TicketProps> = ({ downloadGift, stage, onReturn }) => {
         Back to Card
       </button>
 
-      <div className="text-center mb-8 absolute top-20 animate-fade-in">
+      <div className="text-center absolute top-20 animate-fade-in">
         <h2 className="text-white text-3xl font-bold">Your Golden Ticket!</h2>
         <p className="text-white/80 mt-2">
           This grants you one unforgettable birthday experience.
