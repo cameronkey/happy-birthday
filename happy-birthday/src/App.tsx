@@ -3,6 +3,7 @@ import Loading from './components/Loading';
 import Envelope from './components/Envelope';
 import Card from './components/Card';
 import Ticket from './components/Ticket';
+import { ArrowLeft } from 'lucide-react';
 
 type Stage = 'loading' | 'envelope-drop' | 'envelope-hover' | 'card-3d' | 'ticket-view' | 'final';
 
@@ -169,7 +170,15 @@ function App() {
         return (
           <div className="flex flex-col items-center justify-center min-h-screen text-center text-white">
             <h2 className="text-4xl font-bold mb-4">Enjoy Your Surprise!</h2>
-            <p className="text-xl">We hope you have a fantastic birthday.</p>
+            <p className="text-xl mb-8">We hope you have a fantastic birthday.</p>
+            <button
+              className="absolute top-8 left-8 bg-white/20 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-white/30 transform transition-all duration-300 flex items-center gap-2"
+              onClick={handleReturnToCard}
+              style={{ position: 'absolute', top: '2rem', left: '2rem' }}
+            >
+              <ArrowLeft className="w-5 h-5" />
+              Back to Card
+            </button>
           </div>
         );
       default:
