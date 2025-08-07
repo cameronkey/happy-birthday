@@ -97,57 +97,44 @@ function App() {
     playSound(783, 0.3); // G note
   }
 
-  // const downloadGift = () => {
-  //   // Create a simple gift certificate
-  //   const canvas = document.createElement('canvas');
-  //   const ctx = canvas.getContext('2d');
-  //   if (!ctx) return;
+  const downloadGift = () => {
+    // Create a simple gift certificate
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-  //   canvas.width = 800;
-  //   canvas.height = 600;
+    canvas.width = 800;
+    canvas.height = 600;
     
-  //   // Background gradient
-  //   const gradient = ctx.createLinearGradient(0, 0, 800, 600);
-  //   gradient.addColorStop(0, '#fbbf24');
-  //   gradient.addColorStop(1, '#f97316');
-  //   ctx.fillStyle = gradient;
-  //   ctx.fillRect(0, 0, 800, 600);
+    // Background gradient
+    const gradient = ctx.createLinearGradient(0, 0, 800, 600);
+    gradient.addColorStop(0, '#fbbf24');
+    gradient.addColorStop(1, '#f97316');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 800, 600);
     
-  //   // Text
-  //   ctx.fillStyle = '#ffffff';
-  //   ctx.font = 'bold 48px Arial';
-  //   ctx.textAlign = 'center';
-  //   ctx.fillText('🎁 BIRTHDAY SURPRISE! 🎁', 400, 200);
+    // Text
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 48px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('🎁 BIRTHDAY SURPRISE! 🎁', 400, 200);
     
-  //   ctx.font = '32px Arial';
-  //   ctx.fillText('This certificate entitles you to:', 400, 280);
-  //   ctx.fillText('One Amazing Birthday Celebration!', 400, 340);
+    ctx.font = '32px Arial';
+    ctx.fillText('This certificate entitles you to:', 400, 280);
+    ctx.fillText('One Amazing Birthday Celebration!', 400, 340);
     
-  //   ctx.font = '24px Arial';
-  //   ctx.fillText('Valid for: Unlimited happiness', 400, 420);
-  //   ctx.fillText('Expires: Never!', 400, 460);
+    ctx.font = '24px Arial';
+    ctx.fillText('Valid for: Unlimited happiness', 400, 420);
+    ctx.fillText('Expires: Never!', 400, 460);
 
-  //   // Download
-  //   const link = document.createElement('a');
-  //   link.download = 'birthday-surprise.png';
-  //   link.href = canvas.toDataURL();
-  //   link.click();
+    // Download
+    const link = document.createElement('a');
+    link.download = 'birthday-surprise.png';
+    link.href = canvas.toDataURL();
+    link.click();
     
-  //   setStage('final');
-  // };
-
-    const downloadGift = () => {
-      // Download the built birthday surprise image from dist/assets
-      const imageUrl = '/assets/birthday-surprise.png';
-      
-      const link = document.createElement('a');
-      link.download = 'birthday-surprise.png';
-      link.href = imageUrl;
-      link.click();
-      
-      setStage('final');
-    };
-
+    setStage('final');
+  };
 
   const renderContent = () => {
     switch (stage) {
