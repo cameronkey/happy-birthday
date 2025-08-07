@@ -10,9 +10,40 @@ type CardProps = {
 const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  const [userInteracted, setUserInteracted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isInView, setIsInView] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+
+  // Track user interaction globally
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      setUserInteracted(true);
+      // Try to play video after user interaction
+      if (videoRef.current && !isOpened) {
+        const video = videoRef.current.querySelector('video') as HTMLVideoElement;
+        if (video && !videoPlaying) {
+          video.play().then(() => {
+            setVideoPlaying(true);
+          }).catch(() => {
+            // Video play failed, ignore silently
+          });
+        }
+      }
+    };
+
+    // Listen for any user interaction
+    document.addEventListener('click', handleUserInteraction, { once: true });
+    document.addEventListener('touchstart', handleUserInteraction, { once: true });
+    document.addEventListener('keydown', handleUserInteraction, { once: true });
+
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+      document.removeEventListener('keydown', handleUserInteraction);
+    };
+  }, [isOpened, videoPlaying]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -52,19 +83,56 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
 
   // Pause/play video based on card state
   useEffect(() => {
-    if (videoRef.current) {
+    if (videoRef.current && videoLoaded) {
       const video = videoRef.current.querySelector('video') as HTMLVideoElement;
       if (video) {
         if (isOpened) {
           video.pause();
+          setVideoPlaying(false);
         } else {
-          video.play().catch(() => {
-            // Video play failed, ignore silently
-          });
+          // Only try to play if user has interacted or if we're on a desktop
+          if (userInteracted || !('ontouchstart' in window)) {
+            video.play().then(() => {
+              setVideoPlaying(true);
+            }).catch(() => {
+              // Video play failed, ignore silently
+            });
+          }
         }
       }
     }
-  }, [isOpened]);
+  }, [isOpened, videoLoaded, userInteracted]);
+
+  // Handle video events
+  const handleVideoLoadedData = (video: HTMLVideoElement) => {
+    setVideoLoaded(true);
+    
+    // Try to play immediately on load
+    if (!isOpened && (userInteracted || !('ontouchstart' in window))) {
+      video.play().then(() => {
+        setVideoPlaying(true);
+      }).catch(() => {
+        // Video play failed, will show play button
+      });
+    }
+  };
+
+  const handleVideoClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = e.target as HTMLVideoElement;
+    
+    if (video.paused) {
+      video.play().then(() => {
+        setVideoPlaying(true);
+        setUserInteracted(true);
+      }).catch(() => {
+        // Video play failed
+      });
+    } else {
+      video.pause();
+      setVideoPlaying(false);
+    }
+  };
   const handleTicketClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card from closing when ticket is clicked
     
@@ -77,6 +145,9 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
   };
 
   const handleCardClick = () => {
+    // Mark user as interacted when they click the card
+    setUserInteracted(true);
+    
     // Add haptic feedback for mobile devices
     if ('vibrate' in navigator) {
       navigator.vibrate(100);
@@ -94,6 +165,7 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
+          setUserInteracted(true);
           handleCardClick();
         }
       }}
@@ -194,14 +266,42 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
                 loop 
                 muted 
                 playsInline
+                preload="auto"
+                controls={false}
                 className={`w-full h-full object-cover transition-opacity duration-500 ${
                   videoLoaded ? 'opacity-100' : 'opacity-0'
                 }`}
-                onLoadedData={() => setVideoLoaded(true)}
+                onLoadedData={(e) => handleVideoLoadedData(e.target as HTMLVideoElement)}
                 onError={() => setVideoError(true)}
+                onClick={handleVideoClick}
+                onPlay={() => setVideoPlaying(true)}
+                onPause={() => setVideoPlaying(false)}
               >
                 <source src="/videos/racoon-video.mp4" type="video/mp4" />
               </video>
+            )}
+            
+            {/* Show play button overlay if video is not playing and user hasn't interacted */}
+            {videoLoaded && !videoPlaying && !userInteracted && (
+              <div 
+                className="absolute inset-0 flex items-center justify-center bg-black/20 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const video = videoRef.current?.querySelector('video') as HTMLVideoElement;
+                  if (video) {
+                    video.play().then(() => {
+                      setVideoPlaying(true);
+                      setUserInteracted(true);
+                    }).catch(() => {
+                      // Video play failed
+                    });
+                  }
+                }}
+              >
+                <div className="w-16 h-16 bg-white/80 rounded-full flex items-center justify-center shadow-lg hover:bg-white/90 transition-colors">
+                  <div className="w-0 h-0 border-l-[20px] border-l-pink-500 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent ml-1"></div>
+                </div>
+              </div>
             )}
           </div>
         )}
@@ -229,6 +329,7 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
+              setUserInteracted(true);
               handleTicketClick(e as any);
             }
           }}
