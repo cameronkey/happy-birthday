@@ -136,17 +136,17 @@ function App() {
   //   setStage('final');
   // };
 
-const downloadGift = () => {
-  // Use the correct path from dist/
-  const imageUrl = '/images/birthday-surprise.png';
-  
-  const link = document.createElement('a');
-  link.download = 'birthday-surprise.png';
-  link.href = imageUrl;
-  link.click();
-  
-  setStage('final');
-};
+    const downloadGift = () => {
+      // Download the built birthday surprise image from dist/assets
+      const imageUrl = '/assets/birthday-surprise.png';
+      
+      const link = document.createElement('a');
+      link.download = 'birthday-surprise.png';
+      link.href = imageUrl;
+      link.click();
+      
+      setStage('final');
+    };
 
 
   const renderContent = () => {
