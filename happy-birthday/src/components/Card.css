@@ -135,14 +135,9 @@
   top: 0;
   box-shadow: inset 100px 20px 100px rgba(0, 0, 0, 0.2);
 }
-.cardInsideWrapper {
-  position: relative;
-  margin: 0 auto;
-  padding: 5vh 10vw;
-}
 
 p {
-  font-family: 'Oleo Script', cursive;
+  font-family: "Brush Script MT", cursive;
   margin: 40px;
   color: #333;
 }

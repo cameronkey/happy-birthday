@@ -25,16 +25,16 @@ const Envelope: React.FC<EnvelopeProps> = ({
   return (
     <div className="flex items-center justify-center min-h-screen relative">
       {stage === 'envelope-drop' && (
-        <div className="text-center mb-8 absolute top-40 animate-fade-in">
-          <p className="text-white text-3xl mb-2">👇 Hover over the seal to open!</p>
-          <p className="text-white/80 text-xl">(On mobile: tap and hold)</p>
+        <div className="text-center mb-8 absolute top-20 animate-fade-in">
+          <p className="text-white text-xl mb-2">👇 Hover over the seal to open!</p>
+          <p className="text-white/80 text-sm">(On mobile: tap and hold)</p>
         </div>
       )}
       
       {stage === 'envelope-hover' && (
-        <div className="text-center mb-8 absolute top-40 animate-bounce">
-          <p className="text-white text-3xl mb-2">⬇️ Pull the card out!</p>
-          <p className="text-white/80 text-xl">Drag it down to reveal your surprise</p>
+        <div className="text-center mb-8 absolute top-20 animate-bounce">
+          <p className="text-white text-xl mb-2">⬇️ Pull the card out!</p>
+          <p className="text-white/80 text-sm">Drag it down to reveal your surprise</p>
         </div>
       )}
 
@@ -91,8 +91,8 @@ const Envelope: React.FC<EnvelopeProps> = ({
             >
               <div className="p-6 md:p-12 h-full flex flex-col justify-center items-center bg-gradient-to-br from-pink-100 to-purple-100 rounded-lg border-2 border-pink-200">
                 <Heart className="text-pink-500 w-12 h-12 md:w-24 md:h-24 mb-2 md:mb-4 animate-pulse" />
-                <p className="text-purple-800 font-bold text-center text-xl md:text-3xl">Happy Birthday!</p>
-                <p className="text-purple-600 text-lg md:text-lg text-center mt-1 md:mt-2">Drag me out!</p>
+                <p className="text-purple-800 font-bold text-center text-lg md:text-3xl">Happy Birthday!</p>
+                <p className="text-purple-600 text-sm md:text-lg text-center mt-1 md:mt-2">Drag me out!</p>
               </div>
             </div>
           )}
