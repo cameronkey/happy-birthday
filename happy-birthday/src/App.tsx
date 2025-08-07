@@ -98,39 +98,10 @@ function App() {
   }
 
   const downloadGift = () => {
-    // Create a simple gift certificate
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = 800;
-    canvas.height = 600;
-    
-    // Background gradient
-    const gradient = ctx.createLinearGradient(0, 0, 800, 600);
-    gradient.addColorStop(0, '#fbbf24');
-    gradient.addColorStop(1, '#f97316');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 800, 600);
-    
-    // Text
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 48px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('🎁 BIRTHDAY SURPRISE! 🎁', 400, 200);
-    
-    ctx.font = '32px Arial';
-    ctx.fillText('This certificate entitles you to:', 400, 280);
-    ctx.fillText('One Amazing Birthday Celebration!', 400, 340);
-    
-    ctx.font = '24px Arial';
-    ctx.fillText('Valid for: Unlimited happiness', 400, 420);
-    ctx.fillText('Expires: Never!', 400, 460);
-
-    // Download
+    // Download the existing birthday surprise image
     const link = document.createElement('a');
     link.download = 'birthday-surprise.png';
-    link.href = canvas.toDataURL();
+    link.href = '/images/birthday-surprise.png';
     link.click();
     
     setStage('final');
@@ -165,12 +136,12 @@ function App() {
           </div>
         );
       case 'ticket-view':
-        return <Ticket downloadGift={downloadGift} stage={stage} onReturn={handleReturnToCard} />;
+        return <Ticket downloadGift={downloadGift} onReturn={handleReturnToCard} />;
       case 'final':
         return (
           <div className="flex flex-col items-center justify-center min-h-screen text-center text-white">
             <h2 className="text-4xl font-bold mb-4">Enjoy Your Surprise!</h2>
-            <p className="text-xl mb-8">We hope you have a fantastic birthday.</p>
+            <p className="text-xl mb-8">I hope you have a fantastic birthday 🖤</p>
             <button
               className="absolute top-8 left-8 bg-white/20 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-white/30 transform transition-all duration-300 flex items-center gap-2"
               onClick={handleReturnToCard}

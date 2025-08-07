@@ -25,14 +25,14 @@ const Envelope: React.FC<EnvelopeProps> = ({
   return (
     <div className="flex items-center justify-center min-h-screen relative">
       {stage === 'envelope-drop' && (
-        <div className="text-center mb-8 absolute top-40 animate-fade-in">
+        <div className="text-center mb-8 absolute top-[10rem] animate-fade-in">
           <p className="text-white text-3xl mb-2">👇 Hover over the seal to open!</p>
           <p className="text-white/80 text-xl">(On mobile: tap and hold)</p>
         </div>
       )}
       
       {stage === 'envelope-hover' && (
-        <div className="text-center mb-8 absolute top-40 animate-bounce">
+        <div className="text-center mb-8 absolute top-[10rem] animate-bounce">
           <p className="text-white text-3xl mb-2">⬇️ Pull the card out!</p>
           <p className="text-white/80 text-xl">Drag it down to reveal your surprise</p>
         </div>
