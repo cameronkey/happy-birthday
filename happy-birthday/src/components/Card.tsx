@@ -19,6 +19,7 @@ const Card: React.FC<CardProps> = ({ isOpened, onCardClick, onTicketClick }) => 
       onClick={onCardClick}
     >
       <div className="cardFront relative overflow-hidden">
+        
         <div className="relative z-10 p-4">
           <svg viewBox="0 0 300 150" className="w-full">
             <path id="happy-curve" d="M 50,90 A 100,50 0 0,1 250,90" fill="transparent" />

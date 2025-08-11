@@ -3,7 +3,8 @@ import Loading from './components/Loading';
 import Envelope from './components/Envelope';
 import Card from './components/Card';
 import Ticket from './components/Ticket';
-import { ArrowLeft } from 'lucide-react';
+import Confetti from './components/Confetti';
+import { ArrowLeft, MousePointer } from 'lucide-react';
 
 type Stage = 'loading' | 'envelope-drop' | 'envelope-hover' | 'card-3d' | 'ticket-view' | 'final';
 
@@ -13,6 +14,7 @@ function App() {
   const [dragProgress, setDragProgress] = useState(0);
   const [envelopeOpened, setEnvelopeOpened] = useState(false);
   const [cardIsOpen, setCardIsOpen] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   // Initialize audio on first user interaction
   const playSound = (frequency: number, duration: number) => {
@@ -104,6 +106,10 @@ function App() {
     link.href = '/images/birthday-surprise.png';
     link.click();
     
+    // Trigger confetti celebration
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 3000); // Stop confetti after 3 seconds
+    
     setStage('final');
   };
 
@@ -127,7 +133,13 @@ function App() {
         );
       case 'card-3d':
         return (
-          <div className="flex items-center justify-center min-h-screen">
+          <div className="flex items-center justify-center min-h-screen relative">
+            {/* Tap to Open Indicator - positioned absolutely above the card */}
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium animate-pulse z-10">
+              <MousePointer className="w-4 h-4" />
+              <span>Tap to Open</span>
+            </div>
+            
             <Card 
               isOpened={cardIsOpen}
               onCardClick={handleCardClick}
@@ -143,9 +155,8 @@ function App() {
             <h2 className="text-4xl font-bold mb-4">Enjoy Your Surprise!</h2>
             <p className="text-xl mb-8">I hope you have a fantastic birthday 🖤</p>
             <button
-              className="absolute top-8 left-8 bg-white/20 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-white/30 transform transition-all duration-300 flex items-center gap-2"
+              className="fixed top-4 left-4 md:top-8 md:left-8 bg-white/20 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-white/30 transform transition-all duration-300 flex items-center gap-2 z-50"
               onClick={handleReturnToCard}
-              style={{ position: 'absolute', top: '2rem', left: '2rem' }}
             >
               <ArrowLeft className="w-5 h-5" />
               Back to Card
@@ -160,6 +171,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-600 overflow-hidden relative">
       {renderContent()}
+      <Confetti isActive={showConfetti} />
     </div>
   );
 }

@@ -169,6 +169,11 @@ p {
   }
 }
 
+.golden-ticket {
+  position: relative;
+  overflow: hidden;
+}
+
 .golden-ticket::after {
   content: '';
   position: absolute;
@@ -179,13 +184,22 @@ p {
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.6) 50%,
     rgba(255, 255, 255, 0) 100%
   );
   transform: skewX(-25deg);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
 }
 
 .golden-ticket:hover::after {
-  left: 150%;
-  transition: left 0.75s ease-in-out;
+  animation-duration: 0.75s;
 }
